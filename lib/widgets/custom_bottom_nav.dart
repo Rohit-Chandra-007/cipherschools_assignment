@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
 
 class CustomBottomNav extends StatelessWidget {
@@ -6,10 +7,10 @@ class CustomBottomNav extends StatelessWidget {
   final Function(int) onItemSelected;
 
   const CustomBottomNav({
-    Key? key,
+    super.key,
     required this.selectedIndex,
     required this.onItemSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class CustomBottomNav extends StatelessWidget {
       currentIndex: selectedIndex,
       onTap: onItemSelected,
       selectedItemColor: AppColors.violet80,
-      unselectedItemColor: AppColors.dark20,
+      unselectedItemColor: AppColors.dark25,
       showUnselectedLabels: true,
       backgroundColor: Colors.white,
       elevation: 8,

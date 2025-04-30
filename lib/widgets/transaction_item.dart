@@ -26,7 +26,7 @@ class TransactionItem extends StatelessWidget {
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color: iconBackgroundColor.withOpacity(0.15),
+          color: iconBackgroundColor.withAlpha(38),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Icon(icon, color: iconBackgroundColor, size: 24),

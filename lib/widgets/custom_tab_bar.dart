@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
 
 class CustomTabBar extends StatelessWidget {
@@ -23,11 +24,14 @@ class CustomTabBar extends StatelessWidget {
             onTap: () => onTabSelected(index),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8),
-              
+
               decoration: BoxDecoration(
                 color:
                     selectedIndex == index
-                        ? Colors.orange.withOpacity(0.15)
+                        ? Color.alphaBlend(
+                          Colors.orange.withAlpha((0.15 * 255).toInt()),
+                          Colors.transparent,
+                        )
                         : Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
               ),
@@ -38,7 +42,7 @@ class CustomTabBar extends StatelessWidget {
                   color:
                       selectedIndex == index
                           ? AppColors.yellow100
-                          : AppColors.dark20,
+                          : AppColors.dark25,
                   fontWeight:
                       selectedIndex == index
                           ? FontWeight.w600

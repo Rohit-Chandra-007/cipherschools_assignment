@@ -1,8 +1,12 @@
+import 'package:cipherschools_assignment/screens/home_screen.dart';
+import 'package:cipherschools_assignment/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
-import 'theme/app_theme.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(statusBarColor: Colors.green),
+  );
   runApp(const MyApp());
 }
 
@@ -13,8 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Expense Tracker',
-      theme: AppTheme.lightThemeMode,
-      home: const HomeScreen(),
+      theme: AppTheme.lightThemeMode, // Apply the light theme
+      debugShowCheckedModeBanner: false,
+      home: const HomeScreen(), // Set HomeScreen as the initial route
     );
   }
 }

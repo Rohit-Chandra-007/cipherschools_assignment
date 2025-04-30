@@ -1,9 +1,11 @@
 import 'package:cipherschools_assignment/theme/app_colors.dart';
 import 'package:cipherschools_assignment/widgets/balance_card.dart';
 import 'package:flutter/material.dart';
-import '../widgets/transaction_item.dart';
+import 'package:flutter/services.dart';
+
 import '../widgets/custom_bottom_nav.dart';
 import '../widgets/custom_tab_bar.dart';
+import '../widgets/transaction_item.dart';
 import 'expense_screen.dart';
 import 'income_screen.dart';
 
@@ -21,98 +23,92 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const BalanceCard(),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.light20),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: CustomTabBar(
-                    selectedIndex: _selectedTabIndex,
-                    onTabSelected: (index) {
-                      setState(() {
-                        _selectedTabIndex = index;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(height: 4),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Recent Transaction',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all(
-                          AppColors.violet20,
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 4),
-                        child: const Text(
-                          'See All',
-                          style: TextStyle(color: AppColors.violet100),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              TransactionItem(
-                title: 'Shopping',
-                subtitle: 'Buy some grocery',
-                amount: '120',
-                time: '10:00 AM',
-                icon: Icons.shopping_bag,
-                iconBackgroundColor: Colors.orange,
-              ),
-              TransactionItem(
-                title: 'Subscription',
-                subtitle: 'Disney+ Annual',
-                amount: '499',
-                time: '03:30 PM',
-                icon: Icons.subscriptions,
-                iconBackgroundColor: Colors.purple,
-              ),
-              TransactionItem(
-                title: 'Travel',
-                subtitle: 'Chandigarh to Delhi',
-                amount: '1000',
-                time: '10:00 AM',
-                icon: Icons.directions_car,
-                iconBackgroundColor: Colors.blue,
-              ),
-              TransactionItem(
-                title: 'Food',
-                subtitle: 'Lunch',
-                amount: '32',
-                time: '01:30 PM',
-                icon: Icons.restaurant,
-                iconBackgroundColor: Colors.red,
-              ),
-            ],
+      body: Column(
+        children: [
+          AppBar(),
+          BalanceCard(),
+          const SizedBox(height: 16),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.light20),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: CustomTabBar(
+              selectedIndex: _selectedTabIndex,
+              onTabSelected: (index) {
+                setState(() {
+                  _selectedTabIndex = index;
+                });
+              },
+            ),
           ),
-        ),
+          const SizedBox(height: 4),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Recent Transaction',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      AppColors.violet20,
+                    ),
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    child: const Text(
+                      'See All',
+                      style: TextStyle(color: AppColors.violet100),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              children: const [
+                TransactionItem(
+                  title: 'Shopping',
+                  subtitle: 'Buy some grocery',
+                  amount: '120',
+                  time: '10:00 AM',
+                  icon: Icons.shopping_bag,
+                  iconBackgroundColor: Colors.orange,
+                ),
+                TransactionItem(
+                  title: 'Subscription',
+                  subtitle: 'Disney+ Annual',
+                  amount: '499',
+                  time: '03:30 PM',
+                  icon: Icons.subscriptions,
+                  iconBackgroundColor: Colors.purple,
+                ),
+                TransactionItem(
+                  title: 'Travel',
+                  subtitle: 'Chandigarh to Delhi',
+                  amount: '1000',
+                  time: '10:00 AM',
+                  icon: Icons.directions_car,
+                  iconBackgroundColor: Colors.blue,
+                ),
+                TransactionItem(
+                  title: 'Food',
+                  subtitle: 'Lunch',
+                  amount: '32',
+                  time: '01:30 PM',
+                  icon: Icons.restaurant,
+                  iconBackgroundColor: Colors.red,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
