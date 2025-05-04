@@ -1,12 +1,8 @@
 import 'package:cipherschools_assignment/screens/home_screen.dart';
-import 'package:cipherschools_assignment/theme/app_theme.dart';
+import 'package:cipherschools_assignment/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(statusBarColor: Colors.green),
-  );
   runApp(const MyApp());
 }
 

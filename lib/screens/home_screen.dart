@@ -1,7 +1,6 @@
-import 'package:cipherschools_assignment/theme/app_colors.dart';
+import 'package:cipherschools_assignment/core/theme/app_colors.dart';
 import 'package:cipherschools_assignment/widgets/balance_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../widgets/custom_bottom_nav.dart';
 import '../widgets/custom_tab_bar.dart';
@@ -55,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextButton(
                   onPressed: () {},
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
+                    backgroundColor: WidgetStateProperty.all(
                       AppColors.violet20,
                     ),
                   ),
@@ -124,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         leading: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: AppColors.violet100.withOpacity(0.1),
+                            color: AppColors.violet100,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(
@@ -148,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         leading: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: AppColors.blue100.withOpacity(0.1),
+                            color: AppColors.blue80,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(

@@ -1,7 +1,9 @@
-import 'package:cipherschools_assignment/theme/app_colors.dart';
+import 'package:cipherschools_assignment/core/app_constant.dart';
+import 'package:cipherschools_assignment/core/theme/app_colors.dart';
 import 'package:cipherschools_assignment/widgets/income_expence_color_card.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class BalanceCard extends StatelessWidget {
   const BalanceCard({super.key});
@@ -10,7 +12,7 @@ class BalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      height: 300,
+
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(32),
@@ -20,6 +22,7 @@ class BalanceCard extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [Color(0xFFFFF6E5), Color(0xFFF8EDD8)],
+          tileMode: TileMode.mirror,
         ),
       ),
       child: Column(
@@ -36,7 +39,7 @@ class BalanceCard extends StatelessWidget {
                 ),
                 child: CircleAvatar(
                   radius: 24,
-                  child: Image.asset('assets/images/avatar.png'),
+                  child: Image.asset(AppIcons.avatar),
                 ),
               ),
               Container(
@@ -50,29 +53,35 @@ class BalanceCard extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: AppColors.violet100,
+                    SvgPicture.asset(
+                      AppIcons.arrowDown,
+                      colorFilter: const ColorFilter.mode(
+                        AppColors.violet100,
+                        BlendMode.srcIn,
+                      ),
+
+                      width: 24,
+                      height: 24,
                     ),
                     const SizedBox(width: 4),
                     Text(
                       'October',
-                      style: TextStyle(
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: AppColors.dark100,
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.dark75,
                       ),
                     ),
                   ],
                 ),
               ),
-              IconButton(
-                icon: const Icon(
-                  size: 24,
-                  CupertinoIcons.bell_solid,
-                  color: AppColors.violet100,
+              SvgPicture.asset(
+                AppIcons.notifiaction,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.violet100,
+                  BlendMode.srcIn,
                 ),
-                onPressed: () {},
+                width: 32,
+                height: 32,
               ),
             ],
           ),
@@ -83,13 +92,13 @@ class BalanceCard extends StatelessWidget {
             children: [
               Text(
                 'Account Balance',
-                style: TextStyle(color: Colors.grey[600], fontSize: 15),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleSmall?.copyWith(color: AppColors.dark50),
               ),
+
               const SizedBox(height: 8),
-              const Text(
-                '₹38000',
-                style: TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
-              ),
+              Text('₹38000', style: Theme.of(context).textTheme.titleLarge),
             ],
           ),
           const SizedBox(height: 24),
@@ -98,15 +107,15 @@ class BalanceCard extends StatelessWidget {
               IncomeExpanseColorCard(
                 title: 'Income',
                 amount: '₹12000',
+                iconSvgPath: AppIcons.income,
                 cardColor: AppColors.green100,
-                icon: CupertinoIcons.tray_arrow_down_fill,
               ),
               const SizedBox(width: 16),
               IncomeExpanseColorCard(
                 title: 'Expense',
                 amount: '₹26000',
+                iconSvgPath: AppIcons.expense,
                 cardColor: AppColors.red100,
-                icon: CupertinoIcons.tray_arrow_up_fill,
               ),
             ],
           ),
