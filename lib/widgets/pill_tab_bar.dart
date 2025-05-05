@@ -31,17 +31,30 @@ class PillTabBar extends StatelessWidget {
           color: AppColors.yellow20, // White background for selected tab
           borderRadius: BorderRadius.circular(24),
         ),
+        overlayColor: WidgetStateProperty.resolveWith<Color?>((
+          Set<WidgetState> states,
+        ) {
+          // When pressed, show purple splash color
+          if (states.contains(WidgetState.pressed)) {
+            return AppColors.backgroundColor; // Purple with opacity
+          }
+          return null; // Use default for other states
+        }),
+
         indicatorSize: TabBarIndicatorSize.tab,
         dividerHeight: 0.0,
-
+        splashBorderRadius: BorderRadius.circular(24),
+        splashFactory: NoSplash.splashFactory,
         labelColor: AppColors.yellow100, // Purple text for selected tab
         unselectedLabelColor:
             AppColors.dark50, // Gray text for unselected tabs,
+
         labelStyle: theme.textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.bold,
         ),
         unselectedLabelStyle: theme.textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.normal,
+          backgroundColor: Colors.transparent,
         ),
         tabs: tabs.map((tab) => Tab(height: 36, text: tab)).toList(),
         onTap: onTabChanged,

@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
+import '../models/transaction.dart';
 
 class TransactionItem extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String amount;
-  final String time;
-  final IconData icon;
-  final Color iconBackgroundColor;
+  final Transaction transaction;
 
   const TransactionItem({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.amount,
-    required this.time,
-    required this.icon,
-    required this.iconBackgroundColor,
+    required this.transaction,
   });
 
   @override
@@ -26,17 +17,17 @@ class TransactionItem extends StatelessWidget {
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color: iconBackgroundColor.withAlpha(38),
+          color: transaction.iconBackgroundColor.withAlpha(38),
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Icon(icon, color: iconBackgroundColor, size: 24),
+        child: Icon(transaction.icon, color: transaction.iconBackgroundColor, size: 24),
       ),
       title: Text(
-        title,
+        transaction.title,
         style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
       ),
       subtitle: Text(
-        subtitle,
+        transaction.subtitle,
         style: TextStyle(color: Colors.grey[600], fontSize: 13),
       ),
       trailing: Column(
@@ -44,14 +35,14 @@ class TransactionItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            '- ₹$amount',
+            '- ₹${transaction.amount.toStringAsFixed(0)}',
             style: const TextStyle(
               color: Colors.red,
               fontWeight: FontWeight.w600,
               fontSize: 15,
             ),
           ),
-          Text(time, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+          Text(transaction.time, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
         ],
       ),
     );

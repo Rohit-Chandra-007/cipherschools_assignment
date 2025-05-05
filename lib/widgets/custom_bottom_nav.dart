@@ -14,30 +14,55 @@ class CustomBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      currentIndex: selectedIndex,
-      onTap: onItemSelected,
-      selectedItemColor: AppColors.violet80,
-      unselectedItemColor: AppColors.dark25,
-      showUnselectedLabels: true,
-      backgroundColor: Colors.white,
-      elevation: 8,
-      selectedLabelStyle: const TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, -5),
+          ),
+        ],
       ),
-      unselectedLabelStyle: const TextStyle(fontSize: 12),
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.swap_horiz),
-          label: 'Transaction',
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildNavItem(0, Icons.home, 'Home', selectedIndex == 0),
+            _buildNavItem(1, Icons.swap_horiz, 'Transaction', selectedIndex == 1),
+            const SizedBox(width: 40), // Space for FAB
+            _buildNavItem(3, Icons.pie_chart, 'Budget', selectedIndex == 3),
+            _buildNavItem(4, Icons.person, 'Profile', selectedIndex == 4),
+          ],
         ),
-        BottomNavigationBarItem(icon: SizedBox.shrink(), label: ''),
-        BottomNavigationBarItem(icon: Icon(Icons.pie_chart), label: 'Budget'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildNavItem(int index, IconData icon, String label, bool isSelected) {
+    return InkWell(
+      onTap: () => onItemSelected(index),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: isSelected ? AppColors.violet100 : AppColors.dark25,
+            size: 24,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: isSelected ? AppColors.violet100 : AppColors.dark25,
+              fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

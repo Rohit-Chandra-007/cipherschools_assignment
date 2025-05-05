@@ -1,6 +1,10 @@
 import 'package:cipherschools_assignment/core/theme/app_colors.dart';
+import 'package:cipherschools_assignment/data/transaction_data.dart';
+import 'package:cipherschools_assignment/models/transaction.dart';
 import 'package:cipherschools_assignment/widgets/balance_card.dart';
+import 'package:cipherschools_assignment/widgets/custom_bottom_nav.dart';
 import 'package:cipherschools_assignment/widgets/pill_tab_bar.dart';
+import 'package:cipherschools_assignment/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
 
 import 'expense_screen.dart';
@@ -14,8 +18,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedNavIndex = 0;
+  
   @override
   Widget build(BuildContext context) {
+    List<Transaction> transactions = TransactionData.getTransactions();
+    
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -26,14 +34,38 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 16),
             PillTabBar(tabs: const ['Today', 'Week', 'Month', 'Year']),
             const SizedBox(height: 8),
-            PillWidget(),
+            const PillWidget(),
             Expanded(
               child: TabBarView(
-                children: const [
-                  Center(child: Text('Today')),
-                  Center(child: Text('Week')),
-                  Center(child: Text('Month')),
-                  Center(child: Text('Year')),
+                children: [
+                  // Today tab
+                  ListView.builder(
+                    itemCount: transactions.length,
+                    itemBuilder: (context, index) {
+                      return TransactionItem(transaction: transactions[index]);
+                    },
+                  ),
+                  // Week tab
+                  ListView.builder(
+                    itemCount: transactions.length,
+                    itemBuilder: (context, index) {
+                      return TransactionItem(transaction: transactions[index]);
+                    },
+                  ),
+                  // Month tab
+                  ListView.builder(
+                    itemCount: transactions.length,
+                    itemBuilder: (context, index) {
+                      return TransactionItem(transaction: transactions[index]);
+                    },
+                  ),
+                  // Year tab
+                  ListView.builder(
+                    itemCount: transactions.length,
+                    itemBuilder: (context, index) {
+                      return TransactionItem(transaction: transactions[index]);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -43,68 +75,76 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             showModalBottomSheet(
               context: context,
-              builder:
-                  (context) => Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          leading: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: AppColors.violet100,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons.arrow_upward,
-                              color: AppColors.violet100,
-                            ),
-                          ),
-                          title: const Text('Add Income'),
-                          onTap: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const IncomeScreen(),
-                              ),
-                            );
-                          },
+              builder: (context) => Container(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      leading: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: AppColors.violet100,
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        const SizedBox(height: 8),
-                        ListTile(
-                          leading: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: AppColors.blue80,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons.arrow_downward,
-                              color: AppColors.blue100,
-                            ),
-                          ),
-                          title: const Text('Add Expense'),
-                          onTap: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ExpenseScreen(),
-                              ),
-                            );
-                          },
+                        child: Icon(
+                          Icons.arrow_upward,
+                          color: AppColors.violet100,
                         ),
-                      ],
+                      ),
+                      title: const Text('Add Income'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const IncomeScreen(),
+                          ),
+                        );
+                      },
                     ),
-                  ),
+                    const SizedBox(height: 8),
+                    ListTile(
+                      leading: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: AppColors.blue80,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.arrow_downward,
+                          color: AppColors.blue100,
+                        ),
+                      ),
+                      title: const Text('Add Expense'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ExpenseScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
             );
           },
+          backgroundColor: AppColors.violet100,
           shape: const CircleBorder(),
-          child: const Icon(Icons.add),
+          child: const Icon(Icons.add, color: Colors.white),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: CustomBottomNav(
+          selectedIndex: _selectedNavIndex,
+          onItemSelected: (index) {
+            setState(() {
+              _selectedNavIndex = index;
+            });
+          },
+        ),
       ),
     );
   }
