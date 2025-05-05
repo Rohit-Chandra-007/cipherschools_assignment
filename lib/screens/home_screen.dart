@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 16),
             PillTabBar(tabs: const ['Today', 'Week', 'Month', 'Year']),
             const SizedBox(height: 8),
+            PillWidget(),
             Expanded(
               child: TabBarView(
                 children: const [
@@ -105,6 +106,44 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
+    );
+  }
+}
+
+class PillWidget extends StatelessWidget {
+  const PillWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            "Recent Transactions",
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.dark100,
+            ),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+
+          decoration: BoxDecoration(
+            color: AppColors.violet20,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Text(
+            "See All",
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium!.copyWith(color: AppColors.violet100),
+          ),
+        ),
+      ],
     );
   }
 }

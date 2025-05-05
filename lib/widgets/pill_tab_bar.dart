@@ -1,3 +1,4 @@
+import 'package:cipherschools_assignment/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class PillTabBar extends StatelessWidget {
@@ -16,10 +17,10 @@ class PillTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 8),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5), // Light gray background
+        color: AppColors.light40, // Light gray background
         borderRadius: BorderRadius.circular(28),
       ),
       child: TabBar(
@@ -27,14 +28,15 @@ class PillTabBar extends StatelessWidget {
         isScrollable: false,
         indicatorWeight: 0.0,
         indicator: BoxDecoration(
-          color: Colors.white, // White background for selected tab
+          color: AppColors.yellow20, // White background for selected tab
           borderRadius: BorderRadius.circular(24),
         ),
         indicatorSize: TabBarIndicatorSize.tab,
         dividerHeight: 0.0,
 
-        labelColor: Colors.purple, // Purple text for selected tab
-        // unselectedLabelColor: Colors.grey,
+        labelColor: AppColors.yellow100, // Purple text for selected tab
+        unselectedLabelColor:
+            AppColors.dark50, // Gray text for unselected tabs,
         labelStyle: theme.textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.bold,
         ),
