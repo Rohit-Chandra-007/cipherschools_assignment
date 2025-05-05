@@ -1,58 +1,59 @@
 import 'package:flutter/material.dart';
 
-import '../core/theme/app_colors.dart';
-
 class CustomTabBar extends StatelessWidget {
   final int selectedIndex;
+  final List<String> tabs;
   final Function(int) onTabSelected;
-
+  
   const CustomTabBar({
     super.key,
     required this.selectedIndex,
+    required this.tabs,
     required this.onTabSelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    final tabs = ['Today', 'Week', 'Month', 'Year'];
-
-    return Row(
-      children: List.generate(
-        tabs.length,
-        (index) => Expanded(
-          child: GestureDetector(
-            onTap: () => onTabSelected(index),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-
-              decoration: BoxDecoration(
-                color:
-                    selectedIndex == index
-                        ? Color.alphaBlend(
-                          Colors.orange.withAlpha((0.15 * 255).toInt()),
-                          Colors.transparent,
-                        )
-                        : Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Text(
-                tabs[index],
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color:
-                      selectedIndex == index
-                          ? AppColors.yellow100
-                          : AppColors.dark25,
-                  fontWeight:
-                      selectedIndex == index
-                          ? FontWeight.w600
-                          : FontWeight.w400,
-                  fontSize: 14,
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF5F5F5), // Light gray background
+        borderRadius: BorderRadius.circular(28),
+      ),
+      child: Row(
+        children: List.generate(tabs.length, (index) {
+          final bool isSelected = selectedIndex == index;
+          return Expanded(
+            child: GestureDetector(
+              onTap: () => onTabSelected(index),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.white : Colors.transparent,
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: isSelected ? [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 4,
+                      offset: const Offset(0, 1),
+                    ),
+                  ] : null,
+                ),
+                child: Center(
+                  child: Text(
+                    tabs[index],
+                    style: TextStyle(
+                      color: isSelected ? Colors.purple : Colors.grey,
+                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
     );
   }
