@@ -40,6 +40,24 @@ class TransactionData {
         iconBackgroundColor: Colors.red,
         category: 'expense',
       ),
+      Transaction(
+        title: 'Salary',
+        subtitle: 'Received from company',
+        amount: 12000,
+        time: '01:30 PM',
+        icon: Icons.money,
+        iconBackgroundColor: Colors.green,
+        category: 'income',
+      ),
+      Transaction(
+        title: 'Bonus',
+        subtitle: 'Received from company',
+        amount: 12000,
+        time: '01:30 PM',
+        icon: Icons.money,
+        iconBackgroundColor: Colors.green,
+        category: 'income',
+      ),
     ];
   }
 }

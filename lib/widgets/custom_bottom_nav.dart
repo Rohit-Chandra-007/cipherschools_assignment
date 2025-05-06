@@ -1,67 +1,123 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
-import '../core/theme/app_colors.dart';
+class AnimatedBarExample extends StatefulWidget {
+  const AnimatedBarExample({super.key});
 
-class CustomBottomNav extends StatelessWidget {
-  final int selectedIndex;
-  final Function(int) onItemSelected;
+  @override
+  State<AnimatedBarExample> createState() => _AnimatedBarExampleState();
+}
 
-  const CustomBottomNav({
-    super.key,
-    required this.selectedIndex,
-    required this.onItemSelected,
-  });
+class _AnimatedBarExampleState extends State<AnimatedBarExample> {
+  int selected = 0;
+  bool heart = false;
+  final controller = PageController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, -5),
+    return Scaffold(
+      extendBody: true, //to make floating action button notch transparent
+
+      //to avoid the floating action button overlapping behavior,
+      // when a soft keyboard is displayed
+      // resizeToAvoidBottomInset: false,
+      bottomNavigationBar: StylishBottomBar(
+        option: AnimatedBarOptions(
+          // iconSize: 32,
+          // barAnimation: BarAnimation.liquid,
+          iconStyle: IconStyle.animated,
+
+          // opacity: 0.3,
+        ),
+        // option: DotBarOptions(
+        //   dotStyle: DotStyle.tile,
+        //   gradient: const LinearGradient(
+        //     colors: [
+        //       Colors.deepPurple,
+        //       Colors.pink,
+        //     ],
+        //     begin: Alignment.topLeft,
+        //     end: Alignment.bottomRight,
+        //   ),
+        // ),
+        items: [
+          BottomBarItem(
+            icon: const Icon(Icons.house_outlined),
+            selectedIcon: const Icon(Icons.house_rounded),
+            selectedColor: Colors.red,
+            unSelectedColor: Colors.grey,
+            title: const Text('Home'),
+            badge: const Text('9+'),
+            showBadge: true,
+            badgeColor: Colors.purple,
+            badgePadding: const EdgeInsets.only(left: 4, right: 4),
+          ),
+          BottomBarItem(
+            icon: const Icon(Icons.star_border_rounded),
+            selectedIcon: const Icon(Icons.star_rounded),
+            selectedColor: Colors.red,
+            // unSelectedColor: Colors.purple,
+            // backgroundColor: Colors.orange,
+            title: const Text('Star'),
+          ),
+          // BottomBarItem(
+          //     icon: const Icon(
+          //       Icons.style_outlined,
+          //     ),
+          //     selectedIcon: const Icon(
+          //       Icons.style,
+          //     ),
+          //     selectedColor: Colors.deepOrangeAccent,
+          //     title: const Text('Style')),
+          BottomBarItem(
+            icon: const Icon(Icons.person_outline),
+            selectedIcon: const Icon(Icons.person),
+            selectedColor: Colors.deepPurple,
+            title: const Text('Profile'),
           ),
         ],
+        hasNotch: true,
+        fabLocation: StylishBarFabLocation.center,
+        currentIndex: selected,
+        notchStyle: NotchStyle.square,
+        onTap: (index) {
+          if (index == selected) return;
+          controller.jumpToPage(index);
+          setState(() {
+            selected = index;
+          });
+        },
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(0, Icons.home, 'Home', selectedIndex == 0),
-            _buildNavItem(1, Icons.swap_horiz, 'Transaction', selectedIndex == 1),
-            const SizedBox(width: 40), // Space for FAB
-            _buildNavItem(3, Icons.pie_chart, 'Budget', selectedIndex == 3),
-            _buildNavItem(4, Icons.person, 'Profile', selectedIndex == 4),
-          ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            heart = !heart;
+          });
+        },
+        backgroundColor: Colors.white,
+        child: Icon(
+          heart ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+          color: Colors.red,
         ),
       ),
-    );
-  }
-
-  Widget _buildNavItem(int index, IconData icon, String label, bool isSelected) {
-    return InkWell(
-      onTap: () => onItemSelected(index),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: isSelected ? AppColors.violet100 : AppColors.dark25,
-            size: 24,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              color: isSelected ? AppColors.violet100 : AppColors.dark25,
-              fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
-            ),
-          ),
-        ],
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: SafeArea(
+        child: PageView(
+          controller: controller,
+          children: const [
+            Center(child: Text('Home')),
+            Center(child: Text('Star')),
+            Center(child: Text('Style')),
+            Center(child: Text('Profile')),
+          ],
+        ),
       ),
     );
   }
