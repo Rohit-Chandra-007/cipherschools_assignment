@@ -5,6 +5,7 @@ class AppColors {
 
   static const backgroundColor = Color(0xffFCFCFC);
   static const statusBarColor = Color(0xffFFF6E5);
+  static const transparent = Colors.transparent;
 
   // Base Colors (100% Opacity)
   static const dark100 = Color(0xFF0D0E0F);

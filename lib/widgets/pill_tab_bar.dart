@@ -15,7 +15,6 @@ class PillTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
       padding: const EdgeInsets.all(4),
@@ -26,36 +25,9 @@ class PillTabBar extends StatelessWidget {
       child: TabBar(
         controller: controller,
         isScrollable: false,
-        indicatorWeight: 0.0,
-        indicator: BoxDecoration(
-          color: AppColors.yellow20, // White background for selected tab
-          borderRadius: BorderRadius.circular(24),
-        ),
-        overlayColor: WidgetStateProperty.resolveWith<Color?>((
-          Set<WidgetState> states,
-        ) {
-          // When pressed, show purple splash color
-          if (states.contains(WidgetState.pressed)) {
-            return AppColors.backgroundColor; // Purple with opacity
-          }
-          return null; // Use default for other states
-        }),
 
-        indicatorSize: TabBarIndicatorSize.tab,
-        dividerHeight: 0.0,
         splashBorderRadius: BorderRadius.circular(24),
-        splashFactory: NoSplash.splashFactory,
-        labelColor: AppColors.yellow100, // Purple text for selected tab
-        unselectedLabelColor:
-            AppColors.dark50, // Gray text for unselected tabs,
 
-        labelStyle: theme.textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelStyle: theme.textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.normal,
-          backgroundColor: Colors.transparent,
-        ),
         tabs: tabs.map((tab) => Tab(height: 36, text: tab)).toList(),
         onTap: onTabChanged,
       ),

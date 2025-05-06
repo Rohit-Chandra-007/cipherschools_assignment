@@ -1,6 +1,6 @@
 import 'package:cipherschools_assignment/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart'; // Add this import
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   AppTheme._();
@@ -38,6 +38,41 @@ class AppTheme {
         color: AppColors.dark25,
       ),
     ),
+  );
+
+  // Add this TabBarTheme
+  static final _tabBarTheme = TabBarTheme(
+    indicatorSize: TabBarIndicatorSize.tab,
+    dividerHeight: 0.0,
+    splashFactory: NoSplash.splashFactory,
+    labelPadding: const EdgeInsets.symmetric(horizontal: 24),
+    overlayColor: WidgetStateProperty.resolveWith<Color?>((
+      Set<WidgetState> states,
+    ) {
+      // When pressed, show purple splash color
+      if (states.contains(WidgetState.pressed)) {
+        return AppColors.backgroundColor; // Purple with opacity
+      }
+      if (states.contains(WidgetState.focused)) {
+        return AppColors.transparent; // Purple with opacity
+      }
+      return null; // Use default for other states
+    }),
+
+    labelColor: AppColors.yellow100, // Purple text for selected tab
+    unselectedLabelColor: AppColors.dark50, // Gray text for unselected tabs,
+
+    labelStyle: _textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+    unselectedLabelStyle: _textTheme.bodyMedium?.copyWith(
+      fontWeight: FontWeight.normal,
+      backgroundColor: Colors.transparent,
+    ),
+    indicator: BoxDecoration(
+      color: AppColors.yellow20, // White background for selected tab
+      borderRadius: BorderRadius.circular(24),
+    ),
+
+    indicatorColor: Colors.transparent,
   );
 
   static final lightThemeMode = ThemeData.light().copyWith(
@@ -86,5 +121,7 @@ class AppTheme {
       showUnselectedLabels: true,
       type: BottomNavigationBarType.fixed,
     ),
+    // Add the TabBarTheme here
+    tabBarTheme: _tabBarTheme,
   );
 }
