@@ -7,6 +7,7 @@ import 'package:cipherschools_assignment/features/budget/presentation/widgets/sa
 import 'package:cipherschools_assignment/features/budget/presentation/widgets/time_filter_tabs.dart';
 import 'package:cipherschools_assignment/features/budget/presentation/widgets/category_breakdown_section.dart';
 import 'package:cipherschools_assignment/features/budget/presentation/widgets/summary_statistics_card.dart';
+import 'package:cipherschools_assignment/features/budget/presentation/widgets/swipe_navigation_wrapper.dart';
 import 'package:cipherschools_assignment/shared/widgets/charts/expense_trend_chart.dart';
 import 'package:cipherschools_assignment/core/theme/app_colors.dart';
 
@@ -70,83 +71,89 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
                 return Semantics(
                   label: 'Budget analytics dashboard',
-                  child: RefreshIndicator(
-                    onRefresh: controller.refreshData,
-                    color: AppColors.violet100,
-                    child: CustomScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 16),
-                              
-                              // Salary Overview Card
-                              Semantics(
-                                label: 'Monthly salary and expenses overview',
-                                child: SalaryOverviewCard(
-                                  monthlySalary: controller.monthlySalary,
-                                  monthlyExpenses: controller.currentMonthExpenses,
-                                  onEditSalary: () => _showSalaryInputDialog(context, controller),
-                                ),
-                              ),
-                              
-                              const SizedBox(height: 24),
-                              
-                              // Time Filter Tabs
-                              Semantics(
-                                label: 'Time period filter for expense analysis',
-                                child: TimeFilterTabs(
-                                  selectedFilter: controller.currentTimeFilter,
-                                  onFilterChanged: controller.updateTimeFilter,
-                                ),
-                              ),
-                              
-                              const SizedBox(height: 24),
-                              
-                              // Expense Trend Chart
-                              Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 16),
-                                child: ExpenseTrendChart(
-                                  data: controller.expenseTrendData,
-                                  timeFilter: controller.currentTimeFilter,
-                                  isLoading: controller.isLoading,
-                                  errorMessage: controller.errorMessage,
-                                  onRetry: controller.refreshData,
-                                  onEmptyStateAction: () => _navigateToAddTransaction(context),
-                                ),
-                              ),
-                              
-                              const SizedBox(height: 24),
-                              
-                              // Category Breakdown Section
-                              Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 16),
-                                child: Semantics(
-                                  label: 'Expense breakdown by category',
-                                  child: CategoryBreakdownSection(
-                                    categoryData: controller.categoryBreakdownData,
+                  child: SwipeNavigationWrapper(
+                    currentFilter: controller.currentTimeFilter,
+                    onFilterChanged: controller.updateTimeFilter,
+                    child: RefreshIndicator(
+                      onRefresh: controller.refreshData,
+                      color: AppColors.violet100,
+                      child: CustomScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 16),
+                                
+                                // Salary Overview Card
+                                Semantics(
+                                  label: 'Monthly salary and expenses overview',
+                                  child: SalaryOverviewCard(
+                                    monthlySalary: controller.monthlySalary,
+                                    monthlyExpenses: controller.currentMonthExpenses,
+                                    onEditSalary: () => _showSalaryInputDialog(context, controller),
                                   ),
                                 ),
-                              ),
-                              
-                              const SizedBox(height: 24),
-                              
-                              // Summary Statistics Card
-                              Semantics(
-                                label: 'Financial summary and statistics',
-                                child: SummaryStatisticsCard(
-                                  summary: controller.summaryStatistics,
-                                  previousSummary: controller.previousPeriodSummary,
-                                  hasInsufficientData: controller.hasInsufficientData,
+                                
+                                const SizedBox(height: 24),
+                                
+                                // Time Filter Tabs
+                                Semantics(
+                                  label: 'Time period filter for expense analysis',
+                                  child: TimeFilterTabs(
+                                    selectedFilter: controller.currentTimeFilter,
+                                    onFilterChanged: controller.updateTimeFilter,
+                                  ),
                                 ),
-                              ),
-                              
-                              const SizedBox(height: 32),
-                            ],
+                                
+                                const SizedBox(height: 24),
+                                
+                                // Expense Trend Chart
+                                Container(
+                                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                                  child: ExpenseTrendChart(
+                                    data: controller.expenseTrendData,
+                                    timeFilter: controller.currentTimeFilter,
+                                    isLoading: controller.isLoading,
+                                    errorMessage: controller.errorMessage,
+                                    onRetry: controller.canRetry ? controller.refreshData : null,
+                                    onAlternativeAction: controller.currentError?.alternativeAction,
+                                    alternativeActionLabel: controller.currentError?.alternativeActionLabel,
+                                    onEmptyStateAction: () => _navigateToAddTransaction(context),
+                                  ),
+                                ),
+                                
+                                const SizedBox(height: 24),
+                                
+                                // Category Breakdown Section
+                                Container(
+                                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                                  child: Semantics(
+                                    label: 'Expense breakdown by category',
+                                    child: CategoryBreakdownSection(
+                                      categoryData: controller.categoryBreakdownData,
+                                    ),
+                                  ),
+                                ),
+                                
+                                const SizedBox(height: 24),
+                                
+                                // Summary Statistics Card
+                                Semantics(
+                                  label: 'Financial summary and statistics',
+                                  child: SummaryStatisticsCard(
+                                    summary: controller.summaryStatistics,
+                                    previousSummary: controller.previousPeriodSummary,
+                                    hasInsufficientData: controller.hasInsufficientData,
+                                  ),
+                                ),
+                                
+                                const SizedBox(height: 32),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );

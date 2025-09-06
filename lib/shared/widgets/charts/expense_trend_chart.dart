@@ -15,6 +15,8 @@ class ExpenseTrendChart extends StatefulWidget {
   final bool isLoading;
   final String? errorMessage;
   final VoidCallback? onRetry;
+  final VoidCallback? onAlternativeAction;
+  final String? alternativeActionLabel;
 
   const ExpenseTrendChart({
     super.key,
@@ -26,6 +28,8 @@ class ExpenseTrendChart extends StatefulWidget {
     this.isLoading = false,
     this.errorMessage,
     this.onRetry,
+    this.onAlternativeAction,
+    this.alternativeActionLabel,
   });
 
   @override
@@ -183,17 +187,38 @@ class _ExpenseTrendChartState extends State<ExpenseTrendChart>
             ),
             textAlign: TextAlign.center,
           ),
-          if (widget.onRetry != null) ...[
+          if (widget.onRetry != null || widget.onAlternativeAction != null) ...[
             const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: widget.onRetry,
-              icon: const Icon(Icons.refresh, size: 18),
-              label: const Text('Retry'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.red100,
-                foregroundColor: AppColors.light100,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (widget.onRetry != null) ...[
+                  ElevatedButton.icon(
+                    onPressed: widget.onRetry,
+                    icon: const Icon(Icons.refresh, size: 18),
+                    label: const Text('Retry'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.red100,
+                      foregroundColor: AppColors.light100,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      minimumSize: const Size(44, 44),
+                    ),
+                  ),
+                  if (widget.onAlternativeAction != null) const SizedBox(width: 12),
+                ],
+                if (widget.onAlternativeAction != null)
+                  OutlinedButton.icon(
+                    onPressed: widget.onAlternativeAction,
+                    icon: const Icon(Icons.settings_backup_restore, size: 18),
+                    label: Text(widget.alternativeActionLabel ?? 'Reset'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.red100,
+                      side: BorderSide(color: AppColors.red100),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      minimumSize: const Size(44, 44),
+                    ),
+                  ),
+              ],
             ),
           ],
         ],
