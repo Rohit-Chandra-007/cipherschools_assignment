@@ -1,7 +1,7 @@
 import 'package:cipherschools_assignment/data/transaction_data.dart';
 import 'package:cipherschools_assignment/shared/models/transaction.dart';
 import 'package:cipherschools_assignment/shared/widgets/pill_tab_bar.dart';
-import 'package:cipherschools_assignment/widgets/transaction_item.dart';
+import 'package:cipherschools_assignment/shared/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
 
 
