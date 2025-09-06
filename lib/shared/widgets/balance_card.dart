@@ -7,8 +7,30 @@ import 'package:cipherschools_assignment/shared/widgets/income_expence_color_car
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class BalanceCard extends StatelessWidget {
+class BalanceCard extends StatefulWidget {
   const BalanceCard({super.key});
+
+  @override
+  State<BalanceCard> createState() => _BalanceCardState();
+}
+
+class _BalanceCardState extends State<BalanceCard> {
+  static const List<String> _months = <String>[
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  String _selectedMonth = 'October';
 
   @override
   Widget build(BuildContext context) {
@@ -44,38 +66,60 @@ class BalanceCard extends StatelessWidget {
                   child: Image.asset(AppIcons.avatar),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.violet20),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      AppIcons.arrowDown,
-                      colorFilter: const ColorFilter.mode(
-                        AppColors.violet100,
-                        BlendMode.srcIn,
+              PopupMenuButton<String>(
+                itemBuilder: (context) => _months
+                    .map(
+                      (m) => PopupMenuItem<String>(
+                        value: m,
+                        child: Text(
+                          m,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(color: AppColors.dark100, fontSize: 16),
+                        ),
                       ),
-
-                      width: 24,
-                      height: 24,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      'October',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: AppColors.dark100,
-                        fontSize: 16,
+                    )
+                    .toList(),
+                initialValue: _selectedMonth,
+                onSelected: (value) => setState(() => _selectedMonth = value),
+                color: AppColors.light100,
+                position: PopupMenuPosition.under,
+                offset: const Offset(0, 8),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.violet20),
+                    borderRadius: BorderRadius.circular(40),
+                    color: AppColors.transparent,
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        AppIcons.arrowDown,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.violet100,
+                          BlendMode.srcIn,
+                        ),
+                        width: 24,
+                        height: 24,
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 4),
+                      Text(
+                        _selectedMonth,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color: AppColors.dark100,
+                              fontSize: 16,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
+              
               SvgPicture.asset(
                 AppIcons.notification,
                 colorFilter: const ColorFilter.mode(

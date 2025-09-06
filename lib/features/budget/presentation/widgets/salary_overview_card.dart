@@ -58,7 +58,7 @@ class SalaryOverviewCard extends StatelessWidget {
       children: [
         Text(
           'Monthly Overview',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
             color: AppColors.dark100,
             fontWeight: FontWeight.w600,
           ),
