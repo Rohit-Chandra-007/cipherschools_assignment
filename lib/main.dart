@@ -1,4 +1,4 @@
-import 'package:cipherschools_assignment/screens/home_screen.dart';
+import 'package:cipherschools_assignment/features/home/presentation/screens/home_screen.dart';
 import 'package:cipherschools_assignment/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,6 @@
+import 'package:cipherschools_assignment/shared/models/transaction.dart';
 import 'package:flutter/material.dart';
-import '../models/transaction.dart';
+
 
 class TransactionData {
   static List<Transaction> getTransactions() {

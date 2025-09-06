@@ -1,25 +1,18 @@
-
 import 'package:cipherschools_assignment/core/constants/app_constant.dart';
 import 'package:cipherschools_assignment/core/theme/app_colors.dart';
 import 'package:cipherschools_assignment/data/transaction_data.dart';
-import 'package:cipherschools_assignment/features/add_transaction/presentation/screens/expense_screen.dart';
-import 'package:cipherschools_assignment/features/add_transaction/presentation/screens/income_screen.dart';
-import 'package:cipherschools_assignment/features/budget/presentation/screens/budget_screen.dart';
 import 'package:cipherschools_assignment/shared/models/transaction.dart';
-import 'package:cipherschools_assignment/shared/widgets/pill_tab_bar.dart';
-
-import 'package:cipherschools_assignment/widgets/balance_card.dart';
-
-import 'package:cipherschools_assignment/widgets/transaction_item.dart';
+import 'package:cipherschools_assignment/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
-
-import 'transactions_screen.dart';
-
-import 'profile_screen.dart';
+import '../../../add_transaction/presentation/screens/expense_screen.dart';
+import '../../../add_transaction/presentation/screens/income_screen.dart';
+import '../../../transactions/presentation/screens/transactions_screen.dart';
+import '../../../budget/presentation/screens/budget_screen.dart';
+import '../../../profile/presentation/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,64 +38,24 @@ class _HomeScreenState extends State<HomeScreen> {
       body: _screens[_selectedIndex],
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            showModalBottomSheet(
+            BottomSheetHelper.showAddTransactionBottomSheet(
               context: context,
-              builder:
-                  (context) => Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          leading: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: AppColors.violet100,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons.arrow_upward,
-                              color: AppColors.violet100,
-                            ),
-                          ),
-                          title: const Text('Add Income'),
-                          onTap: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const IncomeScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 8),
-                        ListTile(
-                          leading: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: AppColors.blue80,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons.arrow_downward,
-                              color: AppColors.blue100,
-                            ),
-                          ),
-                          title: const Text('Add Expense'),
-                          onTap: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ExpenseScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+              onIncomePressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const IncomeScreen(),
                   ),
+                );
+              },
+              onExpensePressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ExpenseScreen(),
+                  ),
+                );
+              },
             );
           },
           backgroundColor: AppColors.violet100,

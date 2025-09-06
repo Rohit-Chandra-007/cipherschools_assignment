@@ -34,7 +34,12 @@ class IncomeExpanseColorCard extends StatelessWidget {
                 color: AppColors.light100,
                 borderRadius: BorderRadius.circular(18),
               ),
-              child: SvgPicture.asset(iconSvgPath, height: 32, width: 32),
+              child: SvgPicture.asset(
+                iconSvgPath,
+                height: 32,
+                width: 32,
+                colorFilter: ColorFilter.mode(cardColor, BlendMode.srcIn),
+              ),
             ),
             const SizedBox(width: 12),
             Column(

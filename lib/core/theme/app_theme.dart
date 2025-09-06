@@ -41,7 +41,7 @@ class AppTheme {
   );
 
   // Add this TabBarTheme
-  static final _tabBarTheme = TabBarTheme(
+  static final _tabBarTheme = TabBarThemeData(
     indicatorSize: TabBarIndicatorSize.tab,
     dividerHeight: 0.0,
     splashFactory: NoSplash.splashFactory,
@@ -102,10 +102,6 @@ class AppTheme {
     // Merge GoogleFonts theme with existing custom styles
     textTheme: _textTheme,
     iconTheme: const IconThemeData(color: AppColors.violet100),
-    cardTheme: CardTheme(
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.violet100,
@@ -114,6 +110,10 @@ class AppTheme {
         padding: const EdgeInsets.symmetric(vertical: 16),
       ),
     ),
+    cardTheme: CardThemeData(
+    elevation: 1,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: AppColors.violet100,
       unselectedItemColor: AppColors.light20,

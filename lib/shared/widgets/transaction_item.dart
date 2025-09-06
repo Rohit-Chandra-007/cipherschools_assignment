@@ -1,6 +1,5 @@
-import 'package:cipherschools_assignment/shared/models/transaction.dart';
 import 'package:flutter/material.dart';
-
+import '../models/transaction.dart';
 
 class TransactionItem extends StatelessWidget {
   final Transaction transaction;
