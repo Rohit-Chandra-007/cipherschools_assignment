@@ -2,19 +2,15 @@
 import 'package:cipherschools_assignment/core/constants/app_constant.dart';
 import 'package:cipherschools_assignment/core/theme/app_colors.dart';
 import 'package:cipherschools_assignment/shared/widgets/income_expence_color_card.dart';
-
-
+import 'package:cipherschools_assignment/features/home/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:cipherschools_assignment/shared/utils/currency_formatter.dart';
 
-class BalanceCard extends StatefulWidget {
+class BalanceCard extends ConsumerWidget {
   const BalanceCard({super.key});
 
-  @override
-  State<BalanceCard> createState() => _BalanceCardState();
-}
-
-class _BalanceCardState extends State<BalanceCard> {
   static const List<String> _months = <String>[
     'January',
     'February',
@@ -30,10 +26,23 @@ class _BalanceCardState extends State<BalanceCard> {
     'December',
   ];
 
-  String _selectedMonth = 'October';
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final homeState = ref.watch(homeViewModelProvider);
+    final viewModel = ref.read(homeViewModelProvider.notifier);
+    
+    final selectedMonth = homeState.selectedMonth;
+    final summary = homeState.homeSummary;
+    
+    final balanceText = summary != null 
+        ? CurrencyFormatter.format(summary.balance)
+        : '-';
+    final incomeText = summary != null
+        ? CurrencyFormatter.format(summary.income)
+        : '-';
+    final expenseText = summary != null
+        ? CurrencyFormatter.format(summary.expense)
+        : '-';
     return Container(
       padding: const EdgeInsets.all(16),
 
@@ -81,8 +90,8 @@ class _BalanceCardState extends State<BalanceCard> {
                       ),
                     )
                     .toList(),
-                initialValue: _selectedMonth,
-                onSelected: (value) => setState(() => _selectedMonth = value),
+                initialValue: selectedMonth,
+                onSelected: (value) => viewModel.setSelectedMonth(value),
                 color: AppColors.light100,
                 position: PopupMenuPosition.under,
                 offset: const Offset(0, 8),
@@ -109,7 +118,7 @@ class _BalanceCardState extends State<BalanceCard> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        _selectedMonth,
+                        selectedMonth,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               color: AppColors.dark100,
                               fontSize: 16,
@@ -144,7 +153,7 @@ class _BalanceCardState extends State<BalanceCard> {
               ),
 
               const SizedBox(height: 8),
-              Text('₹38000', style: Theme.of(context).textTheme.titleLarge),
+              Text(balanceText, style: Theme.of(context).textTheme.titleLarge),
             ],
           ),
           const SizedBox(height: 24),
@@ -152,14 +161,14 @@ class _BalanceCardState extends State<BalanceCard> {
             children: [
               IncomeExpanseColorCard(
                 title: 'Income',
-                amount: '₹12000',
+                amount: incomeText,
                 iconSvgPath: AppIcons.income,
                 cardColor: AppColors.green100,
               ),
               const SizedBox(width: 16),
               IncomeExpanseColorCard(
                 title: 'Expense',
-                amount: '₹26000',
+                amount: expenseText,
                 iconSvgPath: AppIcons.expense,
                 cardColor: AppColors.red100,
               ),

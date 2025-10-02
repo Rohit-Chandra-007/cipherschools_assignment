@@ -5,35 +5,35 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme {
   AppTheme._();
 
-  static final _textTheme = GoogleFonts.interTextTheme(
+  static final _textTheme = GoogleFonts.fredokaTextTheme(
     ThemeData.light().textTheme.copyWith(
-      bodyLarge: GoogleFonts.inter(color: AppColors.dark75, fontSize: 16),
-      bodyMedium: GoogleFonts.inter(color: AppColors.dark75, fontSize: 16),
-      bodySmall: GoogleFonts.inter(color: AppColors.dark75, fontSize: 14),
-      titleLarge: GoogleFonts.inter(
+      bodyLarge: GoogleFonts.fredoka(color: AppColors.dark75, fontSize: 18),
+      bodyMedium: GoogleFonts.fredoka(color: AppColors.dark75, fontSize: 16),
+      bodySmall: GoogleFonts.fredoka(color: AppColors.dark75, fontSize: 14),
+      titleLarge: GoogleFonts.fredoka(
         fontWeight: FontWeight.w600,
         color: AppColors.dark100,
-        fontSize: 40,
+        fontSize: 32,
       ),
-      titleMedium: GoogleFonts.inter(
+      titleMedium: GoogleFonts.fredoka(
         fontWeight: FontWeight.w600,
         color: AppColors.light100,
         fontSize: 24,
       ),
-      titleSmall: GoogleFonts.inter(
+      titleSmall: GoogleFonts.fredoka(
         fontWeight: FontWeight.w500,
         color: AppColors.light100,
         fontSize: 18,
       ),
-      labelLarge: GoogleFonts.inter(
+      labelLarge: GoogleFonts.fredoka(
         fontWeight: FontWeight.w400,
         color: AppColors.dark100,
       ),
-      labelMedium: GoogleFonts.inter(
+      labelMedium: GoogleFonts.fredoka(
         fontWeight: FontWeight.w400,
         color: AppColors.dark75,
       ),
-      labelSmall: GoogleFonts.inter(
+      labelSmall: GoogleFonts.fredoka(
         fontWeight: FontWeight.w400,
         color: AppColors.dark25,
       ),

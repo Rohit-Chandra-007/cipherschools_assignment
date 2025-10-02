@@ -1,9 +1,10 @@
-import 'package:cipherschools_assignment/features/home/presentation/screens/home_screen.dart';
+import 'package:cipherschools_assignment/features/home/views/home_screen.dart';
 import 'package:cipherschools_assignment/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,9 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Expense Tracker',
-      theme: AppTheme.lightThemeMode, // Apply the light theme
+      theme: AppTheme.lightThemeMode,
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(), // Set HomeScreen as the initial route
+      home: HomeScreen(),
     );
   }
 }
